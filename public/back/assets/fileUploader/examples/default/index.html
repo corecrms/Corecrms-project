@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="form-group row">
+            <div class="col-xl-3 col-md-4">
+                <label for="validationCustom1">
+                    Select Images
+                    <span style="color: black; font-size: smaller"
+                        >(optional)</span
+                    ></label
+                >
+            </div>
+            <div class="col-xl-3 col-md-2">
+                <input
+                    type="file"
+                    name="images[]"
+                    id="imageInput"
+                    class="form-control"
+                    multiple
+                />
+                <!-- <button
+                    type="button"
+                    class="d-none form-control"
+                    style="width: auto"
+                    id="chooseImages"
+                >
+                    Choose Images
+                </button> -->
+            </div>
+            <div class="col-md-6 col-md-5">
+                <p id="fileLimitMessage" style="color: red"></p>
+                <div id="thumbnails"></div>
+            </div>
+
+        </div>
+
+        <script>
+            // document.getElementById('chooseImages').addEventListener('click', function() {
+            //     document.getElementById('imageInput').click();
+            // });
+
+            document.getElementById('imageInput').addEventListener('change', function() {
+                var files = this.files;
+                var maxImages = 6; // Set your maximum image limit here
+                var fileLimitMessage = document.getElementById('fileLimitMessage');
+                if (files.length > maxImages) {
+                    fileLimitMessage.textContent = 'Please select a maximum of ' + maxImages + ' images.';
+                    this.value = ''; // Clear selected files
+                } else {
+                    fileLimitMessage.textContent = ''; // Clear the message if within the limit
+                }
+            });
+            document.getElementById('imageInput').addEventListener('change', function() {
+
+                var thumbnails = document.getElementById('thumbnails');
+                thumbnails.innerHTML = ''; // Clear previous thumbnails
+
+                var files = this.files;
+                var maxImages = 6; // Set your maximum image limit here
+                for (var i = 0; i < Math.min(files.length, maxImages); i++) {
+                    var img = document.createElement('img');
+                    img.src = URL.createObjectURL(files[i]);
+                    img.style.maxWidth = '100px';
+                    img.style.maxHeight = '80px';
+                    thumbnails.appendChild(img);
+                }
+
+
+            });
+        </script>
+
+    </body>
+</html>
